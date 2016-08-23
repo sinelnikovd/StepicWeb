@@ -1,6 +1,6 @@
 bind = "127.0.0.1:8080"
 def app(environ, start_response):
-	data = environ["QUERY_STRING"]
+	data = "Hello"
 	status = '200 OK'
 	response_headers = [
 		('Content-type','text/plain')
