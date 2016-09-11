@@ -22,4 +22,3 @@ class Answer(models.Model):
     added_at = models.DateTimeField()
     question = models.ForeignKey(Question,on_delete=models.CASCADE)
     author = models.ForeignKey(User,on_delete=models.CASCADE)
-

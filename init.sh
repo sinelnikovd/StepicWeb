@@ -9,4 +9,4 @@ sudo /etc/init.d/mysql restart
 mysql -uroot -e "CREATE USER 'dj'@'%' IDENTIFIED BY '';"
 mysql -uroot -e "GRANT ALL ON *.* TO 'dj'@'%';"
 mysql -uroot -e "СREATE DATABASE django;"
-python ask/manager.py migrate
+python ask/manager.py syncdb
