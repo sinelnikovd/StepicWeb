@@ -1,0 +1,67 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+    Свежие
+{% endblock %}
+
+{% block content %}
+<div class="col-md-12">
+            <div class="page-header">
+                <h1>Свежее</h1>
+            </div>
+        </div>
+        <div class="col-md-12">
+            {% for qa in questions %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><a href="{{ qa.get_url }}">{{ qa }}</a></h3>
+                    </div>
+                    <div class="panel-body">
+                        {{ qa.text|truncatewords_html:30}}
+                        <p><a href="{{ qa.get_url }}">Читать далее...</a></p>
+                    </div>
+                    <div class="panel-footer">{{ qa.author }}</div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-md-12">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    {% if page.has_previous %}
+                    <li>
+                        <a href="?page={{ page.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="disabled" >
+                        <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% for pg in page.paginator.page_range %}
+                        {% if pg == page.number %}
+                        <li class="active"><a href="?page={{ pg }}">{{ pg }}</a></li>
+                        {% else %}
+                        <li><a href="?page={{ pg }}">{{ pg }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if page.has_next %}
+                    <li>
+                       <a href="?page={{ page.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="disabled" >
+                        <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+{% endblock %}

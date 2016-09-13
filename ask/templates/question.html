@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ question }}
+{% endblock %}
+
+{% block content %}
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title">{{ question }}</h1>
+            </div>
+            <div class="panel-body">
+                {{ question.text }}
+            </div>
+            <div class="panel-footer">{{ question.author }}</div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        {% for ans in answer %}
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    {{ ans.text }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
