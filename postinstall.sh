@@ -4,5 +4,5 @@
 sudo pip install django-autofixture
 python ask/manage.py syncdb
 python ask/manage.py createsuperuser
-python manage.py loadtestdata qa.Question:50
-python manage.py loadtestdata qa.Answer:500
+python ask/manage.py loadtestdata qa.Question:50
+python ask/manage.py loadtestdata qa.Answer:500
