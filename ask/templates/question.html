@@ -22,7 +22,7 @@
     {% endfor %}
     </div>
     <div class="col-md-12">
-        <form action="/answer/" method="POST">
+        <form action="/question/" method="POST">
             {% csrf_token %}
             <div class="form-group
                  {% if form.text.errors %}has-error{% endif %}">
