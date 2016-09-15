@@ -44,15 +44,15 @@ def popular(request, *args, **kwargs):
 
 
 def question(request, id):
-    if request.method == "POST":
-        form = AnswerForm(request.POST)
-        if form.is_valid():
-            answer = form.save()
-            return HttpResponseRedirect(answer.question.get_url())
-    else:
-        question = get_object_or_404(Question,pk=id)
-        answer = question.answer_set.all()
-        form = AnswerForm(initial={'question': question.pk})
+    # if request.method == "POST":
+    #     form = AnswerForm(request.POST)
+    #     if form.is_valid():
+    #         answer = form.save()
+    #         return HttpResponseRedirect(answer.question.get_url())
+    # else:
+    question = get_object_or_404(Question,pk=id)
+    answer = question.answer_set.all()
+    form = AnswerForm(initial={'question': question.pk})
     return render(request,'question.html',{'question': question, 'answer':answer, 'form':form})
 
 @csrf_exempt
@@ -72,4 +72,4 @@ def answer(request, *args, **kwargs):
     if form.is_valid():
         answer = form.save()
         return HttpResponseRedirect(answer.question.get_url())
-    return render(request, 'ask.html',{'form': form})
+    return Http404
