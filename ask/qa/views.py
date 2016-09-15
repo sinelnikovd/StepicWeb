@@ -4,7 +4,6 @@ from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_GET, require_POST
 from qa.models import Question
 from qa.forms import AskForm, AnswerForm
-from django.views.decorators.csrf import csrf_exempt
 
 
 def myviews(request, *args, **kwargs):
@@ -48,7 +47,7 @@ def question(request, id):
     answer = question.answer_set.all()
     form = AnswerForm(initial={'question': question.pk})
     return render(request,'question.html',{'question': question, 'answer':answer, 'form':form})
-@csrf_exempt
+
 def ask(request, *args, **kwargs):
     if request.method == "POST":
         form = AskForm(request.POST)
