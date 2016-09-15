@@ -1,6 +1,7 @@
 from django.core.paginator import Paginator, EmptyPage
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 from qa.models import Question
 from qa.forms import AskForm, AnswerForm
@@ -41,13 +42,20 @@ def popular(request, *args, **kwargs):
     page = paginate(request, questions)
     return render(request,'popular.html',{'questions': page.object_list, 'page':page})
 
-@require_GET
+
 def question(request, id):
-    question = get_object_or_404(Question,pk=id)
-    answer = question.answer_set.all()
-    form = AnswerForm(initial={'question': question.pk})
+    if request.method == "POST":
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            answer = form.save()
+            return HttpResponseRedirect(answer.question.get_url())
+    else:
+        question = get_object_or_404(Question,pk=id)
+        answer = question.answer_set.all()
+        form = AnswerForm(initial={'question': question.pk})
     return render(request,'question.html',{'question': question, 'answer':answer, 'form':form})
 
+@csrf_exempt
 def ask(request, *args, **kwargs):
     if request.method == "POST":
         form = AskForm(request.POST)
