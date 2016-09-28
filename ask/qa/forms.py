@@ -9,10 +9,6 @@ class AskForm(forms.Form):
     title.widget.attrs['class'] = 'form-control'
     text = forms.CharField(widget=forms.Textarea)
     text.widget.attrs['class'] = 'form-control'
-    def clean(self):
-        if self._user is None:
-            raise forms.ValidationError(u'Не авторизованы')
-        return self.cleaned_data
     def save(self):
         print self._user
         self.cleaned_data['author_id'] = self._user.id
@@ -23,10 +19,6 @@ class AnswerForm(forms.Form):
     text = forms.CharField(widget=forms.Textarea)
     text.widget.attrs['class'] = 'form-control'
     question = forms.IntegerField(widget=forms.HiddenInput)
-    def clean(self):
-        if self._user is None:
-            raise forms.ValidationError(u'Не авторизованы')
-        return self.cleaned_data
     def clean_question(self):
         question = self.cleaned_data.get('question')
         if question and Question.objects.filter(pk=question).exists():
